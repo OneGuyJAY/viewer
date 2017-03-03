@@ -6,7 +6,7 @@
 <meta name='viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js ></script>
+<script src=../../../showdown/dist/showdown.min.js ></script>
 <script>
 
 	var header, menu;
@@ -16,6 +16,8 @@
 	function init() {
 
 //		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		// css
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
@@ -34,10 +36,13 @@
 		menu.style.cssText = 'background-color: #eee; height: ' + ( 0.95 * window.innerHeight ) + 'px; padding: 0 15px; overflow: auto; ' +
 			'position: absolute; right: -350px; top: 20px; width: 300px; ';
 
+//  ******************************************************************************************************************************************
+//  ******************************************************************************************************************************************
 
 		if ( location.hash ) {
 
 			onHashChange();
+			//onhashchange 事件在当前 URL 的锚部分(以 '#' 号为开始) 发生改变时触发 。
 
 		} else {
 
@@ -50,6 +55,8 @@
 		}
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
+		// addEventListener : 'hashchange' 是添加的时间， onHashChange是函数
+		// 时间捕获和冒泡阶段:
 
 	}
 
@@ -65,7 +72,7 @@
 
 		if ( hashes.length < 1 ) { return; }
 
-		var fileName = hashes[ 1 ].toLowerCase();
+		var fileName = hashes[ 1 ].toLowerCase();  // hashes[1] 是指锚值
 
 		if ( fileName === 'post' ) {
 
@@ -86,7 +93,7 @@
 
 	}
 
-	function loadPost( hashes ) {
+	function loadPost( hashes ) {   //
 
 		loadMarkdownInMenu( hashes[ 2 ], menu );
 
@@ -100,13 +107,15 @@
 
 		ifr = resetIframe( callback );
 
-		ifr.src = hash.substr( 1 );
+		ifr.src = hash.substr( 1 );// 从锚的索引1 开始截取
 
 	}
 
+
+	//  markdown 转换成HTML 文件s
 	function loadMarkdownInMenu( fileName, panel ) {
 
-		var converter = new Showdown.converter();
+		var converter = new showdown.Converter();
 
 		var xmlHttp = new XMLHttpRequest ();
 		xmlHttp.open( 'GET', fileName, true );
@@ -116,8 +125,10 @@
 		function callback() {
 
 			text = xmlHttp.responseText;
+			//responseText:  目前为止接受到的响应体
 
-			panel.innerHTML = converter.makeHtml( text );
+
+			panel.innerHTML = converter.makeHtml( text );  // 把text转换成html文件，写进panel（第二个参数）里面去
 
 		}
 
@@ -133,15 +144,15 @@
 
 			"<div id=doc ><\/div>" +
 
-			"<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js ><\/script>" +
+			"<script src=../../../showdown/dist/showdown.min.js ><\/script>" +
 
 			"<script>" +
 
-			"	doc.style.cssText = 'font: bold 12pt monospace; margin-left: 80px; max-width: 900px';" +
+			"   doc.style.cssText = 'font: bold 12pt monospace; margin-left: 80px; max-width: 900px';" +
 
 			"	var xmlHttp;" +
 
-			"	var converter = new Showdown.converter();" +
+			"	var converter = new showdown.Converter();" +
 
 			"	requestFile( '" + hash.substr( 1 ) + "' );" +
 
@@ -172,7 +183,7 @@
 
 //		location.hash = '';
 
-	};
+	}
 
 
 
@@ -181,11 +192,16 @@
 		var iframes = document.getElementsByTagName( 'iframe' );
 
 		for ( var i = 0; i < iframes.length; i++ ) {
-
-			iframes[0].parentNode.removeChild( iframes[ 0 ] );
+			//初始化所有框架
+			iframes[0].parentNode.removeChild( iframes[ 0 ] );   // 删除
+			// parentNode : 返回元素父节点
 
 		}
-
+			// appendChild : 增加子元素
+			// createElement() 方法通过指定名称创建一个元素
+			// innerheight	返回窗口的文档显示区的高度。
+			// innerwidth	返回窗口的文档显示区的宽度。
+			// 注意：使用 outerWidth 和 outerHeight 属性获取加上工具条与滚动条窗口的宽度与高度。
 		var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
 		ifr.width = window.innerWidth;
 		ifr.height = window.innerHeight;
