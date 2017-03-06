@@ -17,7 +17,7 @@
 
 //		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
-		// css
+		// css 文档
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
@@ -26,12 +26,13 @@
 			'#bars { color: #ccc; }' +
 		'';
 
+		// 在body中添加一个div用作slidemeun
 		header = document.body.appendChild( document.createElement( 'div' ) );
-		header.style.cssText = 'position: absolute; right: 20px; transition: right 1s; ';
+		header.style.cssText = 'position: absolute; right: 20px; transition: right 1s; ';  // transition 过渡效果
 		header.innerHTML = '<h1>' +
 			'<a href=JavaScript:slideMenu(); id=bars >&#9776;</a>'+
 		'</h1>';
-
+		// 在slidemeun中添加一个子元素menu
 		menu =  header.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'background-color: #eee; height: ' + ( 0.95 * window.innerHeight ) + 'px; padding: 0 15px; overflow: auto; ' +
 			'position: absolute; right: -350px; top: 20px; width: 300px; ';
@@ -46,7 +47,7 @@
 
 		} else {
 
-			loadMarkdownInMenu( 'menu-contents.md', menu );
+			loadMarkdownInMenu( 'menu-contents.md', menu );  //转换md文件成html到menu块
 
 			loadHTMLInIframe( '#../../va3c-hacker-cookbook/geometry-shapes/r1/geometry-shapes-extrusions.html#' );
 
